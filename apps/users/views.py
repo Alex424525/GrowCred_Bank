@@ -123,3 +123,23 @@ def research_view(request): # 디지털금융연구소
 @login_required
 def account_inquiry_view(request): # 계좌 조회
     return render(request, 'users/account_inquiry.html')
+
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from accounts.models import Account  # accounts 앱의 Account 모델 import
+
+
+@login_required
+def account_inquiry_view(request):
+    """
+    로그인한 사용자의 계좌 목록을 조회하는 뷰
+    """
+    # 현재 로그인한 사용자의 활성화된 계좌만 조회
+    accounts = Account.objects.filter(user=request.user, is_active=True)
+
+    context = {
+        'accounts': accounts,
+    }
+
+    return render(request, 'users/account_inquiry.html', context)
