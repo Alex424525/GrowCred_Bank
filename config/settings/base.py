@@ -5,6 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = 'django-insecure-x*bw7&m6=k@%$#a=jbybpf-ajeid6(pdwzml!g)&lo8biuhk2k'
 
+
 # DEBUG 설정 추가 - 개발 환경에서는 True로 설정
 DEBUG = True
 
@@ -27,10 +28,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 직접 만든 앱
-    'apps.users.apps.UsersConfig',
+    'apps.users',
 
-    #account
+    # 입출금 앱
+    'transactions',
     'accounts',
+
 
     # 외부 라이브러리
     'rest_framework',
@@ -49,7 +52,9 @@ MIDDLEWARE = [
 ]
 
 # 이 값은 각 환경(dev.py, prod.py)에서 오버라이드함
+
 ROOT_URLCONF = 'config.urls'  # 기본값 추가
+
 
 TEMPLATES = [
     {
@@ -69,6 +74,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+
 # 데이터베이스 설정 추가
 DATABASES = {
     'default': {
@@ -80,6 +86,7 @@ DATABASES = {
         'PORT': '54322',
     }
 }
+
 
 # 비밀번호 검증
 AUTH_PASSWORD_VALIDATORS = [

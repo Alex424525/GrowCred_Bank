@@ -1,4 +1,3 @@
-from django.db import models
 import random
 from django.db import models
 from django.conf import settings
@@ -47,5 +46,5 @@ class Transaction(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
+
         return f"{self.get_transaction_type_display()} {self.amount} ({self.created_at.strftime('%Y-%m-%d %H:%M')})"
-# Create your models here.
