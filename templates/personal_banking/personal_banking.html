@@ -1,0 +1,272 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>개인 뱅킹 | GrowCred</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Sans KR', sans-serif; }
+
+    body {
+      background-color: #f4f6fa;
+    }
+
+    /* 헤더 */
+    .navbar {
+      background-color: #003366;
+      color: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar .left {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .navbar .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .navbar nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .navbar li {
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .auth-buttons a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* 컨텐츠 영역 */
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #003366;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .account-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    label {
+      font-weight: 500;
+      color: #333;
+      font-size: 14px;
+    }
+
+    input, select {
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #003366;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: 500;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #004488;
+    }
+
+    .success-message {
+      background-color: #e6f7e6;
+      color: #2e7d32;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .error-message {
+      background-color: #ffebee;
+      color: #c62828;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .accounts-list {
+      margin-top: 40px;
+    }
+
+    .accounts-list h2 {
+      margin-bottom: 15px;
+      color: #003366;
+    }
+
+    .account-item {
+      background-color: #f0f4f8;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .account-item .details span {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .account-name {
+      font-weight: bold;
+      color: #003366;
+    }
+
+    .account-number {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .account-balance {
+      font-weight: bold;
+      color: #003366;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 네비게이션 -->
+  <header class="navbar">
+    <div class="left">
+      <div class="logo"><a href="/">GrowCred</a></div>
+      <nav>
+        <ul>
+          <li><a href="{% url 'accounts:personal_banking' %}">개인뱅킹</a></li>
+          <li>기업뱅킹</li>
+          <li>공제</li>
+          <li>카드</li>
+          <li>금융상품</li>
+          <li>고객센터</li>
+        </ul>
+      </nav>
+    </div>
+    <div class="auth-buttons">
+      {% if user.is_authenticated %}
+        <span>{{ user.username }}님</span>
+        <a href="{% url 'account_logout' %}">로그아웃</a>
+      {% else %}
+        <a href="{% url 'account_login' %}">로그인</a>
+        <a href="{% url 'signup' %}">회원가입</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>계좌 개설</h1>
+    
+    {% if messages %}
+      {% for message in messages %}
+        <div class="{% if message.tags == 'success' %}success-message{% else %}error-message{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+    
+    {% if user.is_authenticated %}
+      <form class="account-form" method="post" action="{% url 'accounts:create_account' %}">
+        {% csrf_token %}
+        
+        <div class="form-group">
+          <label for="bank_name">은행 선택</label>
+          <select id="bank_name" name="bank_name">
+            <option value="저신용 은행">저신용 은행</option>
+            <option value="국민 은행">국민 은행</option>
+            <option value="신한 은행">신한 은행</option>
+            <option value="우리 은행">우리 은행</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="account_name">계좌 별칭</label>
+          <input type="text" id="account_name" name="account_name" placeholder="계좌 별칭" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">계좌 비밀번호 (4자리 숫자)</label>
+          <input type="password" id="password" name="password" placeholder="4자리 비밀번호" maxlength="4" pattern="\d{4}" required>
+          <small>* 계좌 비밀번호는 4자리 숫자로만 입력해주세요.</small>
+        </div>
+        
+        <button type="submit">계좌 개설하기</button>
+      </form>
+      
+      <!-- 계좌 목록 -->
+      {% if accounts %}
+        <div class="accounts-list">
+          <h2>나의 계좌 목록</h2>
+          {% for account in accounts %}
+            <div class="account-item">
+              <div class="details">
+                <span class="account-name">{{ account.bank_name }} - {{ account.account_name }}</span>
+                <span class="account-number">{{ account.account_number }}</span>
+              </div>
+              <div class="balance">
+                <span class="account-balance">{{ account.balance|floatformat:0 }}원</span>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      
+    {% else %}
+      <div class="error-message">
+        계좌를 개설하려면 먼저 로그인해주세요. <a href="{% url 'account_login' %}" style="color: #003366; text-decoration: underline;">로그인 하기</a>
+      </div>
+    {% endif %}
+  </div>
+
+</body>
+</html>

@@ -276,6 +276,31 @@
 </head>
 <body>
 
+  <!-- 네비게이션 -->
+  <header class="navbar">
+    <div class="left">
+      <div class="logo"><a href="/">GrowCred</a></div>
+      <nav>
+        <ul>
+          <li><a href="{% url 'accounts:personal_banking' %}">개인뱅킹</a></li>
+          <li>기업뱅킹</li>
+          <li>공제</li>
+          <li>카드</li>
+          <li>금융상품</li>
+          <li>고객센터</li>
+        </ul>
+      </nav>
+    </div>
+    <div class="auth-buttons">
+      {% if user.is_authenticated %}
+        <span>{{ user.username }}님</span>
+        <a href="/logout/">로그아웃</a>
+      {% else %}
+        <a href="/login/">로그인</a>
+        <a href="/signup/">회원가입</a>
+      {% endif %}
+    </div>
+  </header>
 
   <div class="container">
     <h1>내 계좌 관리</h1>

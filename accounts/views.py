@@ -46,7 +46,8 @@ def create_account(request):
         form = AccountForm()
 
     accounts = Account.objects.filter(user=request.user, is_active=True)
-    return render(request, {
+
+    return render(request, 'personal_banking/create_account.html', {
         'form': form,
         'accounts': accounts,
     })

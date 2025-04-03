@@ -1,0 +1,123 @@
+{% extends 'users/base.html' %}
+{% load humanize %}
+
+{% block title %}거래 내역{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>거래 내역</h2>
+    
+    <!-- 계좌 선택 필터 -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" class="form-inline">
+                <div class="form-group">
+                    <label for="account_id" class="mr-2">계좌 선택:</label>
+                    <select name="account_id" id="account_id" class="form-control mr-2" onchange="this.form.submit()">
+                        <option value="">모든 계좌</option>
+                        {% for account in accounts %}
+                            <option value="{{ account.id }}" {% if selected_account_id == account.id %}selected{% endif %}>
+                                {{ account.account_number }} (잔액: {{ account.balance|intcomma }}원)
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- 거래 내역 테이블 -->
+    <div class="card">
+        <div class="card-body">
+            {% if transactions %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>날짜</th>
+                                <th>거래 유형</th>
+                                <th>계좌번호</th>
+                                <th>금액</th>
+                                <th>비고</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in transactions %}
+                                {% if not selected_account_id or transaction.account.id == selected_account_id %}
+                                    <tr>
+                                        <td>{{ transaction.transaction_date|date:"Y-m-d H:i" }}</td>
+                                        <td>
+                                            {% if transaction.transaction_type == '입금' %}
+                                                <span class="badge badge-success">입금</span>
+                                            {% else %}
+                                                <span class="badge badge-danger">출금</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ transaction.account.account_number }}</td>
+                                        <td class="text-right">
+                                            {% if transaction.transaction_type == '입금' %}
+                                                <span class="text-success">+{{ transaction.amount|intcomma }}원</span>
+                                            {% else %}
+                                                <span class="text-danger">-{{ transaction.amount|intcomma }}원</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if transaction.transaction_type == '입금' %}
+                                                {{ transaction.description|default:"" }}
+                                            {% else %}
+                                                {{ transaction.description|default:"" }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- 페이지네이션 -->
+                {% if is_paginated %}
+                <nav aria-label="거래내역 페이지네이션">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1{% if selected_account_id %}&account_id={{ selected_account_id }}{% endif %}">처음</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if selected_account_id %}&account_id={{ selected_account_id }}{% endif %}">이전</a>
+                            </li>
+                        {% endif %}
+                        
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ num }}</span>
+                                </li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}{% if selected_account_id %}&account_id={{ selected_account_id }}{% endif %}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if selected_account_id %}&account_id={{ selected_account_id }}{% endif %}">다음</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if selected_account_id %}&account_id={{ selected_account_id }}{% endif %}">마지막</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+                
+            {% else %}
+                <div class="alert alert-info">
+                    거래 내역이 없습니다.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

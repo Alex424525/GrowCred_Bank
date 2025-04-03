@@ -1,0 +1,95 @@
+{% extends "transactions/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="withdrawal-container">
+    <h2>출금하기</h2>
+
+    <!-- 메시지 출력 -->
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- 출금 폼 -->
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.amount.id_for_label }}">출금 금액</label>
+             {{ form.as_p }}
+        </div>
+
+        <button type="submit" class="withdraw-btn">출금하기</button>
+    </form>
+</div>
+
+<!-- 스타일 추가 -->
+<style>
+    .withdrawal-container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .messages {
+        margin-bottom: 15px;
+    }
+
+    .message {
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .withdraw-btn {
+        background-color: #003366;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .withdraw-btn:hover {
+        background-color: #002244;
+    }
+</style>
+{% endblock %}
