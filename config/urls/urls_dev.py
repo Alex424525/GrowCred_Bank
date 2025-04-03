@@ -12,9 +12,6 @@ urlpatterns = [
     path('', home_view, name='home'),
     path('users/', include('apps.users.urls')),
     path('accounts/', include('accounts.urls')),
-<<<<<<< HEAD
     path('transactions/', include('transactions.urls')),
     path("logout/", LogoutView.as_view(), name="account_logout"),
-=======
->>>>>>> main
 ]

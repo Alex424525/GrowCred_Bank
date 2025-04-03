@@ -1,20 +1,4 @@
 from django.contrib import admin
-<<<<<<< HEAD
-from .models import Account, Transaction
-
-@admin.register(Account)
-class AccountAdmin(admin.ModelAdmin):
-    list_display = ('account_number', 'bank_name', 'user', 'balance', 'is_active', 'created_at')
-    list_filter = ('bank_name', 'is_active')
-    search_fields = ('account_number', 'user__username')
-    readonly_fields = ('account_number', 'created_at', 'updated_at')
-
-@admin.register(Transaction)
-class TransactionAdmin(admin.ModelAdmin):
-    list_display = ('account', 'amount', 'transaction_type', 'description', 'created_at')
-    search_fields = ('account__account_number', 'description')
-    list_filter = ('transaction_type', 'created_at')
-=======
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import path, reverse
@@ -198,4 +182,3 @@ class TransactionAdmin(admin.ModelAdmin):
 admin.site.site_header = '은행 관리 시스템'
 admin.site.site_title = '은행 관리'
 admin.site.index_title = '관리자 페이지'
->>>>>>> main
