@@ -1,3 +1,3 @@
-! flow chart(https://github.com/user-attachments/assets/fcfb9e79-b0c7-4bca-b7c8-a9b49bc2af65)
+![스크린샷 2025-04-03 오후 1 58 39](https://github.com/user-attachments/assets/7b63b8e8-e852-4802-9f13-8b47617b1fcf)
 
-! ERD(https://github.com/user-attachments/assets/e076ead4-d77c-4c35-a37e-73996fa7e85e)
+![스크린샷 2025-04-03 오후 1 57 38](https://github.com/user-attachments/assets/78354ad9-8cbb-4873-b0c7-937516425c31)
