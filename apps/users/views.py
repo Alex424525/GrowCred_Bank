@@ -1,7 +1,9 @@
 
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import render , redirect
 from django.contrib import messages
+from django.urls import reverse
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from accounts.models import Account
@@ -46,7 +48,20 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()  # 로그인할 사용자 객체 가져오기
             login(request, user) # 로그인 처리
-            return redirect('home')  # 홈으로 이동
+
+            # jwt 토큰 생성
+            refresh = RefreshToken.for_user(user)
+            access_token = str(refresh.access_token)
+            refresh_token = str(refresh)
+
+            # 응답 객체 생성
+            response = HttpResponseRedirect(reverse('users:home'))
+
+            # 쿠키에 access_token / refresh_token 저장
+            response.set_cookie('access_token', access_token, httponly=True)
+            response.set_cookie('refresh_token', refresh_token, httponly=True)
+
+            return response
         else:
             messages.error(request, '아이디 또는 비밀번호가 틀렸습니다.')
     else:
@@ -70,7 +85,6 @@ def logout_view(request):
         except Exception as e:
             print('블랙리스트 처리 오류',e)
 
-    messages.success(request, '성곡적으로 로그아웃 되었습니다.')
     return redirect('home')
 
 # 회원 정보 확인 ( 마이페이지 )
