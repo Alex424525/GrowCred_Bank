@@ -25,6 +25,10 @@ INSTALLED_APPS = [
 
     # 외부 라이브러리
     'rest_framework_simplejwt.token_blacklist',
+
+    # 입출금 앱
+    'transactions',
+    'accounts',
 ]
 
 MIDDLEWARE = [

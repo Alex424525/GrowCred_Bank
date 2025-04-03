@@ -1,6 +1,6 @@
 services:
   db:
-    container_name: instagram
+    container_name: bank
     image: postgres:16
     restart: always
     volumes:
