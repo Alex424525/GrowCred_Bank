@@ -1,19 +1,13 @@
-# django 에서 기본적으로 제공하는 기능들 불러오기
+
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render , redirect   # 페이지 보여주기 ( render ) 이동시키기 ( redirect )
-from django.contrib import messages         # 회원가입 성공 과 실패 메시지
-
+from django.shortcuts import render , redirect
+from django.contrib import messages
 from rest_framework_simplejwt.tokens import RefreshToken
-
-# 현제 폴더 애서 forms.py 에 class : SignupForm , LoginForm 가져옴
 from .forms import SignupForm ,LoginForm
-# django 에서 호그인 기능 가져오기
-from django.contrib.auth import authenticate , login , logout
+from django.contrib.auth import  login , logout ,get_user_model
+from django.views.decorators.http import require_http_methods
 
-
-
-
-
+User = get_user_model()  # CustomUser 사용
 
 # 홈 뷰
 def home_view(request):
@@ -77,13 +71,46 @@ def logout_view(request):
     messages.success(request, '성곡적으로 로그아웃 되었습니다.')
     return redirect('home')
 
+# 회원 정보 확인 ( 마이페이지 )
+@login_required
+def profile_view(request):
+    user = request.user # 현재 로그인한 사용자
+    context = {
+        'user': user,
+    }
+    return render(request, 'users/profile.html',context)
+
+# 회원 정보 수정 ( POST로 수정 )
+@login_required
+@require_http_methods(['POST'])
+def profile_update_view(request):
+    user = request.user
+    user.full_name = request.POST.get('full_name')
+    user.phone_number = request.POST.get('phone_number')
+    user.address = request.POST.get('address')
+    user.birthday = request.POST.get('birthday')
+    user.save()
+    messages.success(request, '회원정보가 성공적으로 수정 되었습니다')
+    return redirect('users:profile')
+
+# 회원 탈퇴
+@login_required
+@require_http_methods(['POST'])
+def delete_view(request):
+    user = request.user
+    user.delete()   # DB에서 삭제
+    messages.success(request, '신용이 좋아지셧군요 축하드립니다 졸업입니다')
+    return redirect('users:profile')
+
+
+
+
+
+
+
 
 
 # 로그인 사용자만 접근 가능한 페이지
-@login_required
-def transfer_view(request):  # 계좌 이체
-    return render(request, 'users/transfer.html')
-
 @login_required
 def transfer_view(request): # 계좌이체 -> 입금 출금 기능
     return render(request, 'users/transfer.html')
@@ -123,3 +150,4 @@ def research_view(request): # 디지털금융연구소
 @login_required
 def account_inquiry_view(request): # 계좌 조회
     return render(request, 'users/account_inquiry.html')
+
