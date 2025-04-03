@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>GrowCred | 당신의 신용을 키우는 은행</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Sans KR', sans-serif; }
+
+    body {
+      background-color: #f4f6fa;
+    }
+
+    /* 헤더 */
+    .navbar {
+      background-color: #003366;
+      color: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar .left {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .navbar .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .navbar nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .navbar li {
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .auth-buttons a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* 메인 콘텐츠 스타일 */
+    .content-wrapper {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 네비게이션 -->
+  <header class="navbar">
+    <div class="left">
+      <div class="logo"><a href="/">GrowCred</a></div>
+      <nav>
+        <ul>
+          <li><a href="{% url 'accounts:personal_banking' %}">개인뱅킹</a></li>
+          <li>기업뱅킹</li>
+          <li>공제</li>
+          <li>카드</li>
+          <li>금융상품</li>
+          <li>고객센터</li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 여기에 개별 페이지 내용이 삽입됨 -->
+  <div class="content-wrapper">
+    {% block content %}{% endblock %}
+  </div>
+
+</body>
+</html>

@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render , redirect
 from django.contrib import messages
 from rest_framework_simplejwt.tokens import RefreshToken
+
+from accounts.models import Account
 from .forms import SignupForm ,LoginForm
 from django.contrib.auth import  login , logout ,get_user_model
 from django.views.decorators.http import require_http_methods
@@ -117,15 +119,15 @@ def transfer_view(request): # 계좌이체 -> 입금 출금 기능
 
 @login_required
 def deposit_view(request):
-    return render(request, 'users/dummy.html')  # 임시
+    return render(request, 'transactions/transactions_deposit_form.html')  # 임시
 
 @login_required
 def withdraw_view(request):
-    return render(request, 'users/dummy.html')  # 임시
+    return render(request, 'transactions/transactions_withdrawal_form.html')  # 임시
 
 @login_required
 def transactions_view(request): # 거래 내역
-    return render(request, 'users/transactions_view.html')
+    return render(request, 'transactions/transactions_list.html')
 
 @login_required
 def savings_view(request): # 저축
@@ -150,3 +152,17 @@ def research_view(request): # 디지털금융연구소
 @login_required
 def account_inquiry_view(request): # 계좌 조회
     return render(request, 'users/account_inquiry.html')
+
+@login_required
+def account_inquiry_view(request):
+    """
+    로그인한 사용자의 계좌 목록을 조회하는 뷰
+    """
+    # 현재 로그인한 사용자의 활성화된 계좌만 조회
+    accounts = Account.objects.filter(user=request.user, is_active=True)
+
+    context = {
+        'accounts': accounts,
+    }
+
+    return render(request, 'users/account_inquiry.html', context)

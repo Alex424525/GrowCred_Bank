@@ -119,7 +119,7 @@
   <!-- 네비게이션 -->
   <header class="navbar">
     <div class="left">
-      <div class="logo">GrowCred</div>
+      <a href="{% url 'home' %}" class="logo">GrowCred</a>
       <nav>
         <ul>
           <li>개인뱅킹</li>
@@ -133,24 +133,26 @@
     </div>
 
     <div class="auth-buttons">
-      {% if user.is_authenticated %}
-        <span>{{ user.full_name }}님</span>
-        <a href="{% url 'users:logout' %}">로그아웃</a>
-      {% else %}
-        <a href="{% url 'users:login' %}">로그인</a>
-        <a href="{% url 'users:signup' %}">회원가입</a>
-      {% endif %}
+        {% if user.is_authenticated %}
+          <span><a href="{% url 'users:profile' %}">{{ user.full_name }}님</a></span>
+          <a href="{% url 'users:logout' %}">로그아웃</a>
+        {% else %}
+          <a href="{% url 'users:login' %}">로그인</a>
+          <a href="{% url 'users:signup' %}">회원가입</a>
+        {% endif %}
     </div>
   </header>
 
-<!-- 슬로건 -->
+  <!-- 슬로건 -->
   <section class="hero">
     <div class="hero-text">
       <h1>신용이 자라는 금융</h1>
       <p>GrowCred가 당신의 든든한 시작이 되어드립니다.</p>
     </div>
     <div class="hero-image">
+
       <img src="https://postfiles.pstatic.net/MjAyNTA0MDNfMjYw/MDAxNzQzNjc2NTkzNjU1.80h-Y4VPuZupISl3BmQeeSRuUZVnfMa0ijz-63Qpz4Eg.vvzY5huTu_0EU756rJHvmAQjVUnkPAWcQqXOFbbfF8og.PNG/%ED%99%8D%EB%B3%B4%EC%9D%B4%EB%AF%B8%EC%A7%80.png?type=w966" alt="GrowCred 홍보 이미지">
+
     </div>
   </section>
 
