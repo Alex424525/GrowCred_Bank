@@ -153,6 +153,16 @@ def research_view(request): # 디지털금융연구소
 def account_inquiry_view(request): # 계좌 조회
     return render(request, 'users/account_inquiry.html')
 
+<<<<<<< HEAD
+=======
+
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from accounts.models import Account  # accounts 앱의 Account 모델 import
+
+
+>>>>>>> main
 @login_required
 def account_inquiry_view(request):
     """
@@ -165,4 +175,10 @@ def account_inquiry_view(request):
         'accounts': accounts,
     }
 
+<<<<<<< HEAD
     return render(request, 'users/account_inquiry.html', context)
+=======
+    return render(request, 'users/account_inquiry.html', context)
+
+
+>>>>>>> main
