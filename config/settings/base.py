@@ -1,46 +1,30 @@
-# 공통으로 사용할 환경변수
-# settings/base -> settings/local.py : 로컬 환경
-# settings/base -> settings/prod.py : 프로덕션 환경
-
 from datetime import timedelta
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-x*bw7&m6=k@%$#a=jbybpf-ajeid6(pdwzml!g)&lo8biuhk2k'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+AUTH_USER_MODEL = 'users.CustomUser'  # 사용자 모델 변경 (기본 User → CustomUser)
 
-
-AUTH_USER_MODEL = 'user.CustomUser' # User 모델 변경
-
-
-# Application definition
-# from datatime import timedelta
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=7), # JWT 토큰 만료 시간 7일
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=7),  # JWT 토큰 유효기간: 7일
 }
 
-
 INSTALLED_APPS = [
-    # Django App
+    # Django 기본 앱
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # own
-    'user.apps.UserConfig', # User 앱 등록
-    'feed.apps.FeedConfig', # Feed 앱 등록
-    # 3rd party App
-    "rest_framework_simplejwt", # JWT(클라에 저장 되는 인증 토큰) 라이브러리
+
+    # 직접 만든 앱
+    'apps.users.apps.UsersConfig',
+
+    # 외부 라이브러리
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -53,13 +37,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'config.urls'
+# 이 값은 각 환경(dev.py, prod.py)에서 오버라이드함
+# ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [BASE_DIR / 'templates'],  # 템플릿 폴더 경로
+        'APP_DIRS': True,  # 앱 폴더 내의 templates 디렉토리 자동 탐색
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -73,14 +58,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
+# 비밀번호 검증
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -96,27 +74,20 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_URL = '/users/login/'
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
 
+# 언어 및 시간 설정
+LANGUAGE_CODE = 'ko-kr'
+TIME_ZONE = 'Asia/Seoul'
 USE_I18N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
+# 정적 파일 경로
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

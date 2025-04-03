@@ -1,0 +1,222 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>GrowCred | 당신의 신용을 키우는 은행</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Sans KR', sans-serif; }
+
+    body {
+      background-color: #f4f6fa;
+    }
+
+    /* 헤더 */
+    .navbar {
+      background-color: #003366;
+      color: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar .left {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .navbar .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .navbar nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .navbar li {
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .auth-buttons a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* 히어로 */
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 60px 10%;
+      background-color: #e8f0ff;
+    }
+
+    .hero-text h1 {
+      font-size: 36px;
+      color: #002244;
+      margin-bottom: 10px;
+    }
+
+    .hero-text p {
+      font-size: 17px;
+      color: #333;
+    }
+
+    .hero-image img {
+      width: 320px;
+      border-radius: 10px;
+    }
+
+    /* 서비스 */
+    .services {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+      padding: 50px 10%;
+      background-color: #ffffff;
+    }
+
+    .service-item {
+      background-color: #f0f4f8;
+      padding: 25px 10px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: 0.2s;
+    }
+
+    .service-item:hover {
+      background-color: #e0ebf5;
+    }
+
+    .service-item img {
+      width: 50px;
+      margin-bottom: 10px;
+    }
+
+    .service-item p {
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 네비게이션 -->
+  <header class="navbar">
+    <div class="left">
+      <div class="logo">GrowCred</div>
+      <nav>
+        <ul>
+          <li>개인뱅킹</li>
+          <li>기업뱅킹</li>
+          <li>공제</li>
+          <li>카드</li>
+          <li>금융상품</li>
+          <li>고객센터</li>
+        </ul>
+      </nav>
+    </div>
+    <div class="auth-buttons">
+      {% if user.is_authenticated %}
+        <span>{{ user.full_name }}님</span>
+        <a href="{% url 'users:logout' %}">로그아웃</a>
+      {% else %}
+        <a href="{% url 'users:login' %}">로그인</a>
+        <a href="{% url 'users:signup' %}">회원가입</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- 슬로건 -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>신용이 자라는 금융</h1>
+      <p>GrowCred가 당신의 든든한 시작이 되어드립니다.</p>
+    </div>
+    <div class="hero-image">
+      <img src="https://sdmntprwestus.oaiusercontent.com/files/00000000-d310-5230-b5f9-63631d06e38a/raw?se=2025-04-03T09%3A35%3A18Z&sp=r&sv=2024-08-04&sr=b&scid=6e5d705a-6f77-5d63-b991-1fdbf97c4541&skoid=51916beb-8d6a-49b8-8b29-ca48ed86557e&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-03T05%3A29%3A41Z&ske=2025-04-04T05%3A29%3A41Z&sks=b&skv=2024-08-04&sig=qlQAxxbuNW3GbB5P2wMKylBdBZNU%2BUB7ffO6RLkJTRE%3D" alt="GrowCred 홍보 이미지">
+    </div>
+  </section>
+
+  <!-- 서비스 영역 -->
+  <section class="services">
+    <a href="{% url 'users:transfer' %}">
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/2830/2830284.png" alt="계좌 이체">
+        <p>계좌 이체</p>
+      </div>
+    </a>
+
+    <!-- 거래 내역 -->
+    <a href="{% url 'users:transactions' %}">
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png" alt="거래 내역">
+        <p>거래 내역</p>
+      </div>
+    </a>
+
+    <!-- 저축 -->
+    <a href="{% url 'users:savings' %}">
+      <div class="service-item">
+        <img src="https://tse4.mm.bing.net/th?id=OIP.kJrd-R7AewAfgsMJ_MQwdgHaEH&w=263&h=263&c=7" alt="저축">
+        <p>저축</p>
+      </div>
+    </a>
+    <a href="{% url 'users:credit_cards' %}">
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/633/633611.png" alt="신용카드">
+        <p>신용카드</p>
+      </div>
+    </a>
+    <a href="{% url 'users:products' %}">
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" alt="금융상품">
+        <p>금융상품</p>
+      </div>
+    </a>
+    <a href="{% url 'users:consumer' %}">
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/2922/2922506.png" alt="소비자보호">
+        <p>소비자보호</p>
+      </div>
+    </a>
+    <a href="{% url 'users:research' %}">
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/2356/2356782.png" alt="디지털금융연구소">
+        <p>디지털금융연구소</p>
+      </div>
+    </a>
+    <a href="{% url 'users:accounts_inquiry' %}">
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/3524/3524659.png" alt="계좌조회">
+        <p>계좌조회</p>
+      </div>
+    </a>
+  </section>
+
+
+<!-- 계좌이체 선택 스크립트 -->
+  <script>
+    function toggleTransferOptions() {
+      const options = document.getElementById("transferOptions");
+      options.style.display = options.style.display === "flex" ? "none" : "flex";
+    }
+  </script>
+
+</body>
+</html>
