@@ -1,0 +1,70 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+  <!-- 서비스 영역 -->
+  <section class="services">
+    <a href="{% url 'users:transfer' %}">
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/2830/2830284.png" alt="계좌 이체">
+        <p>계좌 이체</p>
+      </div>
+    </a>
+
+    <!-- 거래 내역 -->
+    <a href="{% url 'users:transactions' %}">
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png" alt="거래 내역">
+        <p>거래 내역</p>
+      </div>
+    </a>
+
+    <!-- 저축 -->
+    <a href="{% url 'users:savings' %}">
+      <div class="service-item">
+        <img src="https://tse4.mm.bing.net/th?id=OIP.kJrd-R7AewAfgsMJ_MQwdgHaEH&w=263&h=263&c=7" alt="저축">
+        <p>저축</p>
+      </div>
+    </a>
+    <a href="{% url 'users:credit_cards' %}">
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/633/633611.png" alt="신용카드">
+        <p>신용카드</p>
+      </div>
+    </a>
+    <a href="{% url 'users:products' %}">
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" alt="금융상품">
+        <p>금융상품</p>
+      </div>
+    </a>
+    <a href="{% url 'users:consumer' %}">
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/2922/2922506.png" alt="소비자보호">
+        <p>소비자보호</p>
+      </div>
+    </a>
+    <a href="{% url 'users:research' %}">
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/2356/2356782.png" alt="디지털금융연구소">
+        <p>디지털금융연구소</p>
+      </div>
+    </a>
+    <a href="{% url 'users:accounts_inquiry' %}">
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/3524/3524659.png" alt="계좌조회">
+        <p>계좌조회</p>
+      </div>
+    </a>
+  </section>
+
+
+<!-- 계좌이체 선택 스크립트 -->
+  <script>
+    function toggleTransferOptions() {
+      const options = document.getElementById("transferOptions");
+      options.style.display = options.style.display === "flex" ? "none" : "flex";
+    }
+  </script>
+
+{% endblock %}

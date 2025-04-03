@@ -1,0 +1,56 @@
+{% extends 'users/base.html' %}
+{% block content %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>계좌 이체 - GrowCred</title>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #f4f6fa;
+      padding: 50px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #002244;
+      margin-bottom: 40px;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .action-buttons a {
+      display: inline-block;
+      padding: 20px 40px;
+      background-color: #003366;
+      color: white;
+      font-weight: bold;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .action-buttons a:hover {
+      background-color: #0055aa;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>계좌 이체</h2>
+
+  <div class="action-buttons">
+    <a href="{% url 'users:deposit' %}">입금</a>
+    <a href="{% url 'users:withdraw' %}">출금</a>
+  </div>
+
+</body>
+</html>
+{% endblock %}
