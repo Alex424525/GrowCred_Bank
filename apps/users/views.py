@@ -1,11 +1,10 @@
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render , redirect , get_object_or_404
+from django.shortcuts import render , redirect
 from django.contrib import messages
 from rest_framework_simplejwt.tokens import RefreshToken
 from .forms import SignupForm ,LoginForm
-from django.contrib.auth import authenticate , login , logout ,get_user_model
-from django.http import JsonResponse
+from django.contrib.auth import  login , logout ,get_user_model
 from django.views.decorators.http import require_http_methods
 
 User = get_user_model()  # CustomUser 사용
