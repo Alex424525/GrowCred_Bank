@@ -36,4 +36,7 @@ class SignupForm(UserCreationForm):
 
 # 로그인 폼: 사용자 인증용 폼
 class LoginForm(AuthenticationForm):
-    pass    # 기본 제공되는 기능 그대로 사용
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].label = '아이디'
+        self.fields['password'].label = '비밀번호'

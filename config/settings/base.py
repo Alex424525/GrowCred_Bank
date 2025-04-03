@@ -28,18 +28,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 직접 만든 앱
-    'apps.users.apps.UsersConfig',
-
-
-    # 외부 라이브러리
-    'rest_framework_simplejwt.token_blacklist',
+    'apps.users',
 
     # 입출금 앱
     'transactions',
     'accounts',
 
-    #account
-    'accounts',
 
     # 외부 라이브러리
     'rest_framework',
