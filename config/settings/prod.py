@@ -1,18 +1,20 @@
-from .base import * # noqa
+from .base import *
 
-DEBUG = False   # 디버그 모드(개발 모드) 에러가 발생 하면 장고에서 노란 화면으로 알려줌
+DEBUG = False  # 운영 환경에서는 디버깅 정보 표시 금지
 
 ALLOWED_HOSTS = [
-    "13.125.186.81", # EC2 퍼블릭 IP
+    "13.125.186.81",  # EC2 퍼블릭 IP
 ]
+
+ROOT_URLCONF = 'config.urls.urls_prod'  # 운영 전용 URL 설정
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'instagram',
+        'NAME': 'bank',
         'USER': 'dev_user',
         'PASSWORD': 'securepassword',
-        'HOST': 'db',
-        'PORT': '54322',
+        'HOST': 'db',  # Docker 컨테이너 내 DB 서비스 이름
+        'PORT': '5432',
     }
 }
