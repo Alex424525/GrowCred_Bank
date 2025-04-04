@@ -14,8 +14,17 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0']
 
 AUTH_USER_MODEL = 'users.CustomUser'  # 사용자 모델 변경 (기본 User → CustomUser)
 
+# SimpleJWT 설정
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=7),  # JWT 토큰 유효기간: 7일
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  # 액세스 토큰 유효 시간
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),     # 리프레시 토큰 유효 시간
+    'ROTATE_REFRESH_TOKENS': True,                   # 리프레시 토큰 재발급 시 갱신
+    'BLACKLIST_AFTER_ROTATION': True,                # 이전 토큰은 블랙리스트 처리
+
+    'AUTH_HEADER_TYPES': ('Bearer',),                # Authorization 헤더 타입
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+
+    'TOKEN_BLACKLIST_ENABLED': True,                 # 블랙리스트 기능 활성화 (로그아웃 시 필요)
 }
 
 INSTALLED_APPS = [
@@ -55,6 +64,17 @@ MIDDLEWARE = [
 # 이 값은 각 환경(dev.py, prod.py)에서 오버라이드함
 
 ROOT_URLCONF = 'config.urls'  # 기본값 추가
+
+
+# Django REST Framework 설정
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # JWT 인증 기본 적용
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',  # 모든 요청 인증 필요
+    ),
+}
 
 
 TEMPLATES = [
