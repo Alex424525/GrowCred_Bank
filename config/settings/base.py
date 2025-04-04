@@ -10,7 +10,7 @@ SECRET_KEY = 'django-insecure-x*bw7&m6=k@%$#a=jbybpf-ajeid6(pdwzml!g)&lo8biuhk2k
 DEBUG = True
 
 # ALLOWED_HOSTS 설정 추가
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '44.203.137.219']
 
 AUTH_USER_MODEL = 'users.CustomUser'  # 사용자 모델 변경 (기본 User → CustomUser)
 

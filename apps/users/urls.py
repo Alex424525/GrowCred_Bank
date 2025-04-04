@@ -26,4 +26,5 @@ urlpatterns = [
     path('consumer/', views.consumer_protection_view, name='consumer'),  # 소비자 보호
     path('research/', views.research_view, name='research'),  # 디지털금융연구소
     path('accounts-inquiry/', views.account_inquiry_view, name='accounts_inquiry'),  # 계좌 조회
+    path('home/', views.home_view, name='home'),    # 메인으로 가기
 ]
