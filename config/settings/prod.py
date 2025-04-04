@@ -2,9 +2,7 @@ from .base import *
 
 DEBUG = False  # 운영 환경에서는 디버깅 정보 표시 금지
 
-ALLOWED_HOSTS = [
-    "13.125.186.81",  # EC2 퍼블릭 IP
-]
+ALLOWED_HOSTS = ["44.203.137.219"] # EC2 퍼블릭 IP
 
 ROOT_URLCONF = 'config.urls.urls_prod'  # 운영 전용 URL 설정
 
